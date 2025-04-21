@@ -1,0 +1,2 @@
+python main_drift_etf.py --exp_name cifar10_drift_0.05_etf_2 --drift_lamda 0.05  --lamda 2 --batch_size 512 --model resnet18 --dataset cifar10 --mem_size 500 --epochs 100 --start_epoch 500 --learning_rate 0.5 --temp 0.5 --current_temp 0.2 --past_temp 0.01  --cosine
+python emailUtil.py --name cifar10_drift_0.05_etf_2
