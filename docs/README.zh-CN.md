@@ -2,6 +2,12 @@
 
 本次整理以原始 `main_drift_etf_v2.py` 为主线，提供统一的训练、线性评估、数据下载和 smoke 命令。旧实验移到 `legacy/`，不会被新训练流程导入。
 
+![GPLASC 方法示意：预先分配任务区域，在区域内学习类别结构。](assets/method-overview.png)
+
+图中颜色表示不同任务，空心点表示任务原型，小点分组表示类别。这是概念示意，不是实验得到的特征可视化。
+
+![GPLASC 两阶段流程：表征学习与冻结编码器后的线性评估。](assets/training-pipeline.png)
+
 ## 快速开始
 
 先安装适合机器的 PyTorch / torchvision，再执行：

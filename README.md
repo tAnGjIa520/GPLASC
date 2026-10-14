@@ -1,51 +1,80 @@
+<div align="center">
+
 # GPLASC
 
-**Global Pre-fixing, Local Adjusting: A Simple yet Effective Contrastive Strategy for Continual Learning**
+### Global Pre-fixing, Local Adjusting
+**A Simple yet Effective Contrastive Strategy for Continual Learning**
 
-[Paper (arXiv:2509.15347)](https://arxiv.org/abs/2509.15347) · [中文说明](docs/README.zh-CN.md) · [Implementation notes](docs/implementation.md)
+Jia Tang · Xinrui Wang · Songcan Chen<br>
+Nanjing University of Aeronautics and Astronautics
 
-GPLASC learns representations for class-incremental learning by assigning tasks to fixed ETF regions, adjusting features within those regions, and distilling old features from replay examples.
+[**Paper**](https://arxiv.org/abs/2509.15347) · [**Quick start**](#quick-start) · [**中文说明**](docs/README.zh-CN.md) · [**Implementation**](docs/implementation.md) · [**Citation**](#citation)
 
-This repository now provides a maintained implementation of the released **Co²L + GPLASC v2** training path. The earlier experiment scripts remain in [`legacy/`](legacy/) for reference. The maintained package does not import them.
+</div>
 
-## Installation
+![GPLASC overview: separate task regions with locally discriminative class structure.](docs/assets/method-overview.png)
 
-Python **3.10+** is required. Install a compatible PyTorch/torchvision pair for your CPU or CUDA environment first, then:
+**Learn new classes while keeping old representations organized.** GPLASC allocates distinct feature regions to different tasks, learns class structure within each region, and limits old-feature drift through replay-based distillation.
+
+## How it works
+
+Continual learning requires both **within-task discrimination** and **between-task separation**. A model must distinguish classes that may never have appeared together during training.
+
+| Component | Idea | Purpose |
+|---|---|---|
+| **Global pre-fixing** | Place task prototypes at the vertices of a fixed simplex ETF. | Separate different tasks in representation space. |
+| **Local adjusting** | Combine contrastive learning with region-range and prototype-position constraints. | Learn discriminative class structure inside each task's region. |
+| **Feature distillation** | Keep replayed examples close to their previous encoder features. | Reduce drift as new tasks arrive. |
+
+*The overview is a conceptual illustration, not a measured embedding. Colors denote tasks; the small groups represent classes, and hollow circles denote task prototypes.*
+
+### From representations to predictions
+
+![GPLASC training pipeline: geometry and feature losses before the projection head, contrastive and relation losses after it, followed by frozen-encoder linear evaluation.](docs/assets/training-pipeline.png)
+
+The maintained **Co²L + GPLASC v2** path uses two stages:
+
+1. **Representation learning:** train the encoder and projection head on the current task plus replay examples. Geometric constraints and feature distillation use normalized encoder features; asymmetric SupCon and relation distillation use normalized projections.
+2. **Linear evaluation:** freeze the encoder, discard the projection head, and train a class-balanced linear classifier. Report both Class-IL and Task-IL accuracy.
+
+The released v2 loss behavior and its differences from the paper are documented in [implementation notes](docs/implementation.md). Earlier experiments remain in [`legacy/`](legacy/).
+
+## Quick start
+
+### 1. Install
+
+Use **Python 3.10+** and install a compatible PyTorch/torchvision pair for your machine, then:
 
 ```bash
+git clone https://github.com/tAnGjIa520/GPLASC.git
+cd GPLASC
 python -m pip install -e .
-# For regression tests and formatting checks:
-python -m pip install -e '.[dev]'
 ```
 
-Tested runtime: Python 3.10, PyTorch 2.9.0+cu128, torchvision 0.24.0+cu128, NVIDIA H200. TensorBoard, Apex, Docker, and pretrained weights are not required. Training metrics are written as JSON Lines.
+Tested with Python 3.10, PyTorch 2.9.0+cu128, torchvision 0.24.0+cu128, and an NVIDIA H200. No pretrained weights, Apex, TensorBoard, or Docker are required.
 
-## Prepare data
+### 2. Prepare CIFAR-10
 
-Download CIFAR-10 on a machine with network access:
+On a machine with network access:
 
 ```bash
 python -m gplasc download --dataset cifar10 --data-root /path/to/data
 ```
 
-Use `--dataset cifar100` for CIFAR-100. Train, evaluate, and smoke commands **never download data**. On shared storage, download once on the development machine and use the same `--data-root` on the offline GPU machine.
+Training and evaluation read local files only. For an offline GPU server, prepare the data on a networked machine and share or copy the data directory. See [data preparation](docs/running.md#prepare-data) for the download mirror and processed Tiny-ImageNet format.
 
-If the official CIFAR-10 download is slow, the [Baidu dataset mirror](https://dataset.bj.bcebos.com/cifar/cifar-10-python.tar.gz) provides the original archive. Its MD5 must be `c58f30108f718f92721af3b95e74349a`; extract it under the data root so that `cifar-10-batches-py/` is directly beneath that root.
-
-Tiny-ImageNet requires the original repository's **processed NumPy format**, with `processed/x_train_01.npy` … `x_train_20.npy`, matching `y_train_*.npy`, and `x_val_*.npy` / `y_val_*.npy`. Images are expected as floating-point NHWC arrays in [0, 1]. The standard raw image directory is not automatically converted or downloaded.
-
-## Quick smoke
+### 3. Run a smoke check
 
 ```bash
 CUDA_VISIBLE_DEVICES=0 python -m gplasc smoke \
   --data-root /path/to/data --output runs/smoke --device cuda
 ```
 
-This runs two CIFAR-10 tasks, each with at most 16 current examples per class, a 32-example replay buffer, and one epoch per task. It then trains a linear classifier and evaluates 64 test examples. It exercises real ResNet-18 forward/backward passes, replay, distillation, checkpoint loading, and linear evaluation. `--device cpu` is also supported.
+This runs two small real-data tasks, replay and distillation, checkpoint reload, and linear evaluation. A successful run writes `runs/smoke/smoke_result.json` with `"status": "passed"`. Use a fresh output directory for each run. CPU execution is available with `--device cpu`.
 
-Success creates `runs/smoke/smoke_result.json` with `"status": "passed"`. Small-sample accuracy is **not** a reproduction of paper results. Choose a fresh output directory for each run; existing smoke runs are never overwritten.
+## Experiments
 
-## Train and evaluate
+Train representations, then evaluate the final task checkpoint:
 
 ```bash
 CUDA_VISIBLE_DEVICES=0 python -m gplasc train \
@@ -57,70 +86,47 @@ CUDA_VISIBLE_DEVICES=0 python -m gplasc evaluate \
   --output runs/cifar10-evaluation --device cuda
 ```
 
-A single visible GPU is recommended. `--device auto` chooses CUDA when available and otherwise CPU. `--threads` controls PyTorch CPU threads; `workers` in the configuration controls data-loader processes. Multi-GPU distributed training is not implemented.
+| Dataset | Task split | First / later task epochs | Configuration |
+|---|---:|---:|---|
+| CIFAR-10 | 5 × 2 classes | 500 / 100 | [cifar10.json](configs/cifar10.json) |
+| CIFAR-100 | 5 × 20 classes | 500 / 100 | [cifar100.json](configs/cifar100.json) |
+| Tiny-ImageNet | 10 × 20 classes | 500 / 50 | [tiny-imagenet.json](configs/tiny-imagenet.json) |
 
-Configuration files are also provided for CIFAR-100 and processed Tiny-ImageNet. They are explicit starting configurations based on the paper and released code; full benchmark accuracy has not been revalidated by this refactor.
+All three configurations use 100 epochs for linear evaluation. `memory_size` is the total replay budget; `train_tasks` limits the trained prefix without changing the full-sequence ETF. A single visible GPU is recommended.
 
-| Configuration | Tasks × classes | Representation epochs | Linear evaluation |
-|---|---:|---:|---:|
-| CIFAR-10 | 5 × 2 | 500 first, 100 subsequent | 100 epochs |
-| CIFAR-100 | 5 × 20 | 500 first, 100 subsequent | 100 epochs |
-| Tiny-ImageNet | 10 × 20 | 500 first, 50 subsequent | 100 epochs |
-
-`memory_size` is the total replay capacity. Set `train_tasks` to train a prefix of the sequence; ETF construction always uses the full configured task count. `classes_per_task` is validated and respected rather than silently overwritten.
-
-### Resume at a task boundary
-
-```bash
-python -m gplasc train --config configs/cifar10.json \
-  --data-root /path/to/data --output runs/cifar10-resumed \
-  --resume runs/cifar10/task_01.pt --device cuda
-```
-
-Checkpoints save the model, SGD state, task ETF, replay indices, and Python/NumPy/PyTorch RNG states. Only `train_tasks` and `workers` may differ on resume. Keep the original dataset, sample ordering, device setup, and runtime versions for comparable results. Mid-epoch resume is not supported. Legacy checkpoints have a different format and are not automatically converted.
-
-## Outputs
-
-- `config.json`, `runtime.json`: effective configuration and execution context.
-- `metrics.jsonl`: per-epoch total loss, individual loss components, and replay counts.
-- `task_XX.pt`: task-boundary representation checkpoints.
-- Evaluation `metrics.json`: final and per-epoch Class-IL / Task-IL accuracies.
-- Evaluation `linear_last.pt`: last-epoch classifier and frozen encoder.
-
-The historical best test accuracy is reported for comparison, but the saved classifier is always from the **last epoch**. Test-set maxima are not validation-based model selection. Class-IL uses all classifier outputs; Task-IL restricts predictions using the true task ID, matching the original evaluation protocol.
-
-## Code map
-
-```text
-gplasc/
-  config.py       validated experiment configuration
-  data.py         datasets, augmentation, replay, balanced sampling
-  models.py       original small-image ResNets and projection/classifier heads
-  losses.py       asymmetric SupCon, region penalties, feature and relation distillation
-  training.py     sequential representation training
-  evaluation.py   frozen-encoder linear evaluation
-  runtime.py      devices, RNG state, checkpoint I/O
-  __main__.py     download / train / evaluate / smoke CLI
-configs/          full-run and smoke configurations
-tests/            numerical regressions and task-boundary resume tests
-legacy/           archived experimental scripts
-```
+**These are starting configurations, not newly verified benchmark results.** The refactored implementation has passed numerical regression tests and small GPU runs; full paper-level accuracy has not been revalidated.
 
 ## Verification
 
+| Check | Verified scope |
+|---|---|
+| **11 CPU regression tests** | Legacy loss agreement, ETF geometry, empty replay, memory updates, and task-boundary resume equivalence. |
+| **Real CIFAR-10 GPU smoke** | Two tasks with ResNet-18, a 32-example buffer, checkpoint reload, and linear evaluation. |
+| **GPU resume through task 5** | Restore a task-1 checkpoint, train tasks 2–4, and evaluate all 10 classes. |
+
+See the [verification record](docs/verification.md) for settings and measured outputs. The smoke runs validate execution, not convergence.
+
 ```bash
+python -m pip install -e '.[dev]'
 pytest -q
 ruff check gplasc tests
 ruff format --check gplasc tests
 ```
 
-[Recorded verification results](docs/verification.md) include the real-data GPU smoke and task-1-to-task-4 resume run.
+## Documentation and code
 
-CPU tests do not download data. They cover numerical agreement with the archived contrastive and region losses, ETF geometry, empty replay, stable relation distillation, memory constraints, frozen-encoder evaluation, and equivalence between uninterrupted and task-boundary-resumed training. Real-data GPU smoke is run separately.
+| Resource | Contents |
+|---|---|
+| [Running guide](docs/running.md) | Installation, data formats, training, task-boundary resume, and outputs. |
+| [Implementation notes](docs/implementation.md) | Objective, intentional changes, and migration from legacy scripts. |
+| [中文说明](docs/README.zh-CN.md) | Chinese quick start and implementation overview. |
+| [`gplasc/`](gplasc/) | Configuration, data, models, losses, training, evaluation, and checkpoint I/O. |
+| [`configs/`](configs/) · [`tests/`](tests/) | Experiment settings and regression tests. |
+| [`legacy/`](legacy/) | Archived research variants and original scripts. |
 
-## Provenance and citation
+The diagrams are stored locally as PNG and editable SVG in [`docs/assets/`](docs/assets/). They can be regenerated with `python docs/assets/generate_figures.py` on a system with Pillow and DejaVu Sans fonts.
 
-The model and contrastive-learning implementation derive from [Co²L](https://github.com/chaht01/Co2L) and [SupContrast](https://github.com/HobbitLong/SupContrast), with ResNet code adapted from [pytorch-classification](https://github.com/bearpaw/pytorch-classification). Tiny-ImageNet's processed-data convention follows [Mammoth](https://github.com/aimagelab/mammoth). Source attribution is retained in the archived code and model module.
+## Citation
 
 ```bibtex
 @article{tang2025gplasc,
@@ -130,3 +136,7 @@ The model and contrastive-learning implementation derive from [Co²L](https://gi
   year={2025}
 }
 ```
+
+## Acknowledgments
+
+This implementation builds on [Co²L](https://github.com/chaht01/Co2L) and [SupContrast](https://github.com/HobbitLong/SupContrast). ResNet code derives from [pytorch-classification](https://github.com/bearpaw/pytorch-classification), and the processed Tiny-ImageNet convention follows [Mammoth](https://github.com/aimagelab/mammoth). Source attribution is retained in the model module and archived code.

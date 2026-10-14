@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600">
+<rect width="1200" height="100%" fill="white"/>
+<text x="40" y="50.599999999999994" font-family="DejaVu Sans,Arial,sans-serif" font-size="30" font-weight="700" text-anchor="start" fill="#172B4D">One encoder. Two training stages.</text>
+<text x="40" y="86.76" font-family="DejaVu Sans,Arial,sans-serif" font-size="18" font-weight="400" text-anchor="start" fill="#61718A">Geometry is learned before projection; contrastive relations are learned after it.</text>
+<rect x="30" y="120" width="1140" height="300" rx="16" fill="#F7F9FC" stroke="#DCE4EE"/>
+<text x="50" y="150.3" font-family="DejaVu Sans,Arial,sans-serif" font-size="15" font-weight="700" text-anchor="start" fill="#3974D9">01  REPRESENTATION LEARNING</text>
+<rect x="50" y="210" width="180" height="88" rx="16" fill="white" stroke="#DCE4EE"/>
+<text x="140.0" y="241.94" font-family="DejaVu Sans,Arial,sans-serif" font-size="17" font-weight="700" text-anchor="middle" fill="#172B4D">Current + replay</text>
+<text x="140.0" y="270.66" font-family="DejaVu Sans,Arial,sans-serif" font-size="13" font-weight="400" text-anchor="middle" fill="#61718A">Two augmented views</text>
+<rect x="280" y="210" width="170" height="88" rx="16" fill="white" stroke="#DCE4EE"/>
+<text x="365.0" y="241.94" font-family="DejaVu Sans,Arial,sans-serif" font-size="17" font-weight="700" text-anchor="middle" fill="#172B4D">ResNet encoder</text>
+<text x="365.0" y="270.66" font-family="DejaVu Sans,Arial,sans-serif" font-size="13" font-weight="400" text-anchor="middle" fill="#61718A">512 / 2048 dimensions</text>
+<rect x="500" y="210" width="170" height="88" rx="16" fill="white" stroke="#DCE4EE"/>
+<text x="585.0" y="241.94" font-family="DejaVu Sans,Arial,sans-serif" font-size="17" font-weight="700" text-anchor="middle" fill="#172B4D">Encoder features</text>
+<text x="585.0" y="270.66" font-family="DejaVu Sans,Arial,sans-serif" font-size="13" font-weight="400" text-anchor="middle" fill="#61718A">Shared representation</text>
+<polyline points="230,254 280,254" fill="none" stroke="#61718A" stroke-width="2"/>
+<polyline points="272.10175694298664,258.3148298474378 280,254 272.10175694298664,249.68517015256216" fill="none" stroke="#61718A" stroke-width="2"/>
+<polyline points="450,254 500,254" fill="none" stroke="#61718A" stroke-width="2"/>
+<polyline points="492.10175694298664,258.3148298474378 500,254 492.10175694298664,249.68517015256216" fill="none" stroke="#61718A" stroke-width="2"/>
+<rect x="760" y="174" width="380" height="84" rx="16" fill="#E6F5F1" stroke="#B6DDD3"/>
+<text x="780" y="205.76" font-family="DejaVu Sans,Arial,sans-serif" font-size="18" font-weight="700" text-anchor="start" fill="#199786">Region + feature losses</text>
+<text x="780" y="234.48" font-family="DejaVu Sans,Arial,sans-serif" font-size="14" font-weight="400" text-anchor="start" fill="#61718A">Range hinge · prototype MSE · old-feature drift</text>
+<polyline points="670,238 715,238 715,216 760,216" fill="none" stroke="#199786" stroke-width="2"/>
+<polyline points="752.1017569429866,220.31482984743784 760,216 752.1017569429866,211.68517015256216" fill="none" stroke="#199786" stroke-width="2"/>
+<rect x="500" y="326" width="170" height="66" rx="16" fill="#EBF1FD" stroke="#C8D9F4"/>
+<text x="585" y="351.12" font-family="DejaVu Sans,Arial,sans-serif" font-size="16" font-weight="700" text-anchor="middle" fill="#3974D9">Projection MLP</text>
+<text x="585" y="374.66" font-family="DejaVu Sans,Arial,sans-serif" font-size="13" font-weight="400" text-anchor="middle" fill="#61718A">128 dimensions</text>
+<polyline points="585,298 585,326" fill="none" stroke="#3974D9" stroke-width="2"/>
+<polyline points="580.6851701525621,318.10175694298664 585,326 589.3148298474379,318.10175694298664" fill="none" stroke="#3974D9" stroke-width="2"/>
+<rect x="760" y="316" width="380" height="76" rx="16" fill="#EBF1FD" stroke="#C8D9F4"/>
+<text x="780" y="346.76" font-family="DejaVu Sans,Arial,sans-serif" font-size="18" font-weight="700" text-anchor="start" fill="#3974D9">Contrastive + relation losses</text>
+<text x="780" y="372.48" font-family="DejaVu Sans,Arial,sans-serif" font-size="14" font-weight="400" text-anchor="start" fill="#61718A">Asymmetric SupCon · instance relations</text>
+<polyline points="670,359 760,359" fill="none" stroke="#3974D9" stroke-width="2"/>
+<polyline points="752.1017569429866,363.3148298474378 760,359 752.1017569429866,354.6851701525622" fill="none" stroke="#3974D9" stroke-width="2"/>
+<text x="50" y="352.48" font-family="DejaVu Sans,Arial,sans-serif" font-size="14" font-weight="400" text-anchor="start" fill="#61718A">Previous-task model stays frozen.</text>
+<text x="50" y="378.48" font-family="DejaVu Sans,Arial,sans-serif" font-size="14" font-weight="400" text-anchor="start" fill="#61718A">Replay preserves old knowledge.</text>
+<rect x="30" y="444" width="1140" height="126" rx="16" fill="#FCF7EF" stroke="#DCE4EE"/>
+<text x="50" y="474.3" font-family="DejaVu Sans,Arial,sans-serif" font-size="15" font-weight="700" text-anchor="start" fill="#D8872E">02  LINEAR EVALUATION</text>
+<rect x="50" y="499" width="250" height="48" rx="16" fill="white" stroke="#E8D9C1"/>
+<text x="175.0" y="527.12" font-family="DejaVu Sans,Arial,sans-serif" font-size="16" font-weight="700" text-anchor="middle" fill="#172B4D">Frozen encoder</text>
+<rect x="370" y="499" width="250" height="48" rx="16" fill="white" stroke="#E8D9C1"/>
+<text x="495.0" y="527.12" font-family="DejaVu Sans,Arial,sans-serif" font-size="16" font-weight="700" text-anchor="middle" fill="#172B4D">Train linear classifier</text>
+<rect x="760" y="499" width="380" height="48" rx="16" fill="white" stroke="#E8D9C1"/>
+<text x="950.0" y="527.12" font-family="DejaVu Sans,Arial,sans-serif" font-size="16" font-weight="700" text-anchor="middle" fill="#172B4D">Class-IL / Task-IL accuracy</text>
+<polyline points="300,523 370,523" fill="none" stroke="#D8872E" stroke-width="2"/>
+<polyline points="362.10175694298664,527.3148298474379 370,523 362.10175694298664,518.6851701525621" fill="none" stroke="#D8872E" stroke-width="2"/>
+<polyline points="620,523 760,523" fill="none" stroke="#D8872E" stroke-width="2"/>
+<polyline points="752.1017569429866,527.3148298474379 760,523 752.1017569429866,518.6851701525621" fill="none" stroke="#D8872E" stroke-width="2"/>
+</svg>

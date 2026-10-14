@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="570" viewBox="0 0 1200 570">
+<rect width="1200" height="100%" fill="white"/>
+<text x="40" y="52.239999999999995" font-family="DejaVu Sans,Arial,sans-serif" font-size="32" font-weight="700" text-anchor="start" fill="#172B4D">Give each task its own region.</text>
+<text x="40" y="89.58" font-family="DejaVu Sans,Arial,sans-serif" font-size="19" font-weight="400" text-anchor="start" fill="#61718A">Global task separation + local class discrimination + feature stability</text>
+<rect x="30" y="122" width="520" height="380" rx="16" fill="#F7F9FC" stroke="#DCE4EE"/>
+<rect x="650" y="122" width="520" height="380" rx="16" fill="#F7F9FC" stroke="#DCE4EE"/>
+<text x="290" y="162.22" font-family="DejaVu Sans,Arial,sans-serif" font-size="21" font-weight="700" text-anchor="middle" fill="#172B4D">Conventional contrastive learning</text>
+<text x="910" y="162.22" font-family="DejaVu Sans,Arial,sans-serif" font-size="21" font-weight="700" text-anchor="middle" fill="#172B4D">GPLASC</text>
+<circle cx="290" cy="327" r="128" fill="white" stroke="#BBCBDE" stroke-width="2"/>
+<circle cx="293.0" cy="327.0" r="5" fill="#3974D9" stroke="#3974D9" stroke-width="1"/>
+<circle cx="242.0578488813893" cy="355.4004099293137" r="5" fill="#3974D9" stroke="#3974D9" stroke-width="1"/>
+<circle cx="278.4724147553335" cy="263.23439268111997" r="5" fill="#3974D9" stroke="#3974D9" stroke-width="1"/>
+<circle cx="325.5227436197155" cy="395.09817473807675" r="5" fill="#3974D9" stroke="#3974D9" stroke-width="1"/>
+<circle cx="253.29245432865616" cy="323.5922670861852" r="5" fill="#3974D9" stroke="#3974D9" stroke-width="1"/>
+<circle cx="308.3287434010799" cy="304.2870105512143" r="5" fill="#3974D9" stroke="#3974D9" stroke-width="1"/>
+<circle cx="256.7427988723395" cy="388.9007545309005" r="5" fill="#3974D9" stroke="#3974D9" stroke-width="1"/>
+<circle cx="232.84830113779154" cy="250.9484314528719" r="5" fill="#3974D9" stroke="#3974D9" stroke-width="1"/>
+<circle cx="291.8387356388103" cy="333.71580520347476" r="5" fill="#3974D9" stroke="#3974D9" stroke-width="1"/>
+<circle cx="234.3178687098137" cy="343.36131776015577" r="5" fill="#3974D9" stroke="#3974D9" stroke-width="1"/>
+<circle cx="299.56653861582583" cy="268.77441261804364" r="5" fill="#3974D9" stroke="#3974D9" stroke-width="1"/>
+<circle cx="299.60640029118616" cy="408.78080131390965" r="5" fill="#3974D9" stroke="#3974D9" stroke-width="1"/>
+<circle cx="305.2968437456898" cy="339.8843537447538" r="5" fill="#D8872E" stroke="#D8872E" stroke-width="1"/>
+<circle cx="248.0380910578898" cy="328.7883506183219" r="5" fill="#D8872E" stroke="#D8872E" stroke-width="1"/>
+<circle cx="335.26446574347284" cy="281.7547998019904" r="5" fill="#D8872E" stroke="#D8872E" stroke-width="1"/>
+<circle cx="286.30156147741366" cy="412.92043733882326" r="5" fill="#D8872E" stroke="#D8872E" stroke-width="1"/>
+<circle cx="277.12215947918196" cy="311.69767261099224" r="5" fill="#D8872E" stroke="#D8872E" stroke-width="1"/>
+<circle cx="331.6530229098452" cy="332.3875488370788" r="5" fill="#D8872E" stroke="#D8872E" stroke-width="1"/>
+<circle cx="237.68824580823158" cy="363.87113197855473" r="5" fill="#D8872E" stroke="#D8872E" stroke-width="1"/>
+<circle cx="308.2840524192699" cy="242.96611738632214" r="5" fill="#D8872E" stroke="#D8872E" stroke-width="1"/>
+<circle cx="300.0822192755406" cy="344.27277784491883" r="5" fill="#D8872E" stroke="#D8872E" stroke-width="1"/>
+<circle cx="249.87402380757962" cy="314.5941129053456" r="5" fill="#D8872E" stroke="#D8872E" stroke-width="1"/>
+<circle cx="347.82916274476605" cy="299.5812484558585" r="5" fill="#D8872E" stroke="#D8872E" stroke-width="1"/>
+<circle cx="257.6650587115855" cy="406.68972061611703" r="5" fill="#D8872E" stroke="#D8872E" stroke-width="1"/>
+<circle cx="310.39934285800484" cy="346.7089945997692" r="5" fill="#199786" stroke="#199786" stroke-width="1"/>
+<circle cx="273.75367468277847" cy="301.33520206778405" r="5" fill="#199786" stroke="#199786" stroke-width="1"/>
+<circle cx="370.7679312156697" cy="321.5547315517395" r="5" fill="#199786" stroke="#199786" stroke-width="1"/>
+<circle cx="248.81981276198022" cy="390.33297571525407" r="5" fill="#199786" stroke="#199786" stroke-width="1"/>
+<circle cx="307.0085142484573" cy="307.00000181231076" r="5" fill="#199786" stroke="#199786" stroke-width="1"/>
+<circle cx="335.3872348976739" cy="357.95423872209244" r="5" fill="#199786" stroke="#199786" stroke-width="1"/>
+<circle cx="243.23672813421916" cy="321.50043992936514" r="5" fill="#199786" stroke="#199786" stroke-width="1"/>
+<circle cx="375.12052815176577" cy="274.5062513786214" r="5" fill="#199786" stroke="#199786" stroke-width="1"/>
+<circle cx="303.58387764796225" cy="346.7060931712988" r="5" fill="#199786" stroke="#199786" stroke-width="1"/>
+<circle cx="284.30205249431407" cy="291.6615905984844" r="5" fill="#199786" stroke="#199786" stroke-width="1"/>
+<circle cx="368.8938280292492" cy="343.28355157469406" r="5" fill="#199786" stroke="#199786" stroke-width="1"/>
+<circle cx="230.93134526732092" cy="367.1193191263319" r="5" fill="#199786" stroke="#199786" stroke-width="1"/>
+<text x="290" y="486.12" font-family="DejaVu Sans,Arial,sans-serif" font-size="16" font-weight="400" text-anchor="middle" fill="#61718A">Task distributions can overlap</text>
+<circle cx="910" cy="327" r="128" fill="white" stroke="#BBCBDE" stroke-width="2"/>
+<circle cx="910.0" cy="248.0" r="46" fill="#EBF1FD" stroke="#3974D9" stroke-width="1"/>
+<circle cx="927.061981485369" cy="233.49378707349913" r="3" fill="#3974D9" stroke="#3974D9" stroke-width="1"/>
+<circle cx="935.061981485369" cy="233.49378707349913" r="3" fill="#3974D9" stroke="#3974D9" stroke-width="1"/>
+<circle cx="931.061981485369" cy="241.49378707349913" r="3" fill="#3974D9" stroke="#3974D9" stroke-width="1"/>
+<circle cx="905.4336819530182" cy="268.99331748361743" r="3" fill="#3974D9" stroke="#3974D9" stroke-width="1"/>
+<circle cx="913.4336819530182" cy="268.99331748361743" r="3" fill="#3974D9" stroke="#3974D9" stroke-width="1"/>
+<circle cx="909.4336819530182" cy="276.99331748361743" r="3" fill="#3974D9" stroke="#3974D9" stroke-width="1"/>
+<circle cx="885.5043365616128" cy="232.51289544288343" r="3" fill="#3974D9" stroke="#3974D9" stroke-width="1"/>
+<circle cx="893.5043365616128" cy="232.51289544288343" r="3" fill="#3974D9" stroke="#3974D9" stroke-width="1"/>
+<circle cx="889.5043365616128" cy="240.51289544288343" r="3" fill="#3974D9" stroke="#3974D9" stroke-width="1"/>
+<circle cx="910.0" cy="248.0" r="6" fill="white" stroke="#3974D9" stroke-width="2"/>
+<circle cx="841.5839931010294" cy="366.5" r="46" fill="#FCF1E5" stroke="#D8872E" stroke-width="1"/>
+<circle cx="858.6459745863983" cy="351.9937870734991" r="3" fill="#D8872E" stroke="#D8872E" stroke-width="1"/>
+<circle cx="866.6459745863983" cy="351.9937870734991" r="3" fill="#D8872E" stroke="#D8872E" stroke-width="1"/>
+<circle cx="862.6459745863983" cy="359.9937870734991" r="3" fill="#D8872E" stroke="#D8872E" stroke-width="1"/>
+<circle cx="837.0176750540476" cy="387.49331748361743" r="3" fill="#D8872E" stroke="#D8872E" stroke-width="1"/>
+<circle cx="845.0176750540476" cy="387.49331748361743" r="3" fill="#D8872E" stroke="#D8872E" stroke-width="1"/>
+<circle cx="841.0176750540476" cy="395.49331748361743" r="3" fill="#D8872E" stroke="#D8872E" stroke-width="1"/>
+<circle cx="817.0883296626422" cy="351.0128954428834" r="3" fill="#D8872E" stroke="#D8872E" stroke-width="1"/>
+<circle cx="825.0883296626422" cy="351.0128954428834" r="3" fill="#D8872E" stroke="#D8872E" stroke-width="1"/>
+<circle cx="821.0883296626422" cy="359.0128954428834" r="3" fill="#D8872E" stroke="#D8872E" stroke-width="1"/>
+<circle cx="841.5839931010294" cy="366.5" r="6" fill="white" stroke="#D8872E" stroke-width="2"/>
+<circle cx="978.4160068989706" cy="366.5" r="46" fill="#E6F5F1" stroke="#199786" stroke-width="1"/>
+<circle cx="995.4779883843396" cy="351.9937870734991" r="3" fill="#199786" stroke="#199786" stroke-width="1"/>
+<circle cx="1003.4779883843396" cy="351.9937870734991" r="3" fill="#199786" stroke="#199786" stroke-width="1"/>
+<circle cx="999.4779883843396" cy="359.9937870734991" r="3" fill="#199786" stroke="#199786" stroke-width="1"/>
+<circle cx="973.8496888519888" cy="387.49331748361743" r="3" fill="#199786" stroke="#199786" stroke-width="1"/>
+<circle cx="981.8496888519888" cy="387.49331748361743" r="3" fill="#199786" stroke="#199786" stroke-width="1"/>
+<circle cx="977.8496888519888" cy="395.49331748361743" r="3" fill="#199786" stroke="#199786" stroke-width="1"/>
+<circle cx="953.9203434605835" cy="351.0128954428834" r="3" fill="#199786" stroke="#199786" stroke-width="1"/>
+<circle cx="961.9203434605835" cy="351.0128954428834" r="3" fill="#199786" stroke="#199786" stroke-width="1"/>
+<circle cx="957.9203434605835" cy="359.0128954428834" r="3" fill="#199786" stroke="#199786" stroke-width="1"/>
+<circle cx="978.4160068989706" cy="366.5" r="6" fill="white" stroke="#199786" stroke-width="2"/>
+<text x="910" y="486.12" font-family="DejaVu Sans,Arial,sans-serif" font-size="16" font-weight="400" text-anchor="middle" fill="#61718A">Fixed task regions, adaptable class structure</text>
+<polyline points="568,318 630,318" fill="none" stroke="#61718A" stroke-width="2"/>
+<polyline points="622.1017569429866,322.3148298474378 630,318 622.1017569429866,313.6851701525622" fill="none" stroke="#61718A" stroke-width="2"/>
+<text x="600" y="355.66" font-family="DejaVu Sans,Arial,sans-serif" font-size="13" font-weight="400" text-anchor="middle" fill="#61718A">allocate</text>
+<circle cx="46" cy="534" r="5" fill="#3974D9" stroke="#3974D9" stroke-width="1"/>
+<text x="60" y="537.3" font-family="DejaVu Sans,Arial,sans-serif" font-size="15" font-weight="400" text-anchor="start" fill="#61718A">Task 1</text>
+<circle cx="174" cy="534" r="5" fill="#D8872E" stroke="#D8872E" stroke-width="1"/>
+<text x="188" y="537.3" font-family="DejaVu Sans,Arial,sans-serif" font-size="15" font-weight="400" text-anchor="start" fill="#61718A">Task 2</text>
+<circle cx="302" cy="534" r="5" fill="#199786" stroke="#199786" stroke-width="1"/>
+<text x="316" y="537.3" font-family="DejaVu Sans,Arial,sans-serif" font-size="15" font-weight="400" text-anchor="start" fill="#61718A">Task 3</text>
+<text x="700" y="536.48" font-family="DejaVu Sans,Arial,sans-serif" font-size="14" font-weight="400" text-anchor="start" fill="#61718A">Conceptual 2D view; not a learned embedding</text>
+</svg>
