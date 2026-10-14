@@ -1,0 +1,15 @@
+name: checks
+on: [push, pull_request]
+jobs:
+  cpu-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - run: python -m pip install torch==2.9.0 torchvision==0.24.0 --index-url https://download.pytorch.org/whl/cpu
+      - run: python -m pip install -e '.[dev]'
+      - run: ruff check gplasc tests
+      - run: ruff format --check gplasc tests
+      - run: pytest -q

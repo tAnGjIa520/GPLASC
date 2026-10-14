@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gplasc"
+version = "0.1.0"
+description = "Global Pre-fixing, Local Adjusting for continual representation learning"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["torch>=2.6", "torchvision>=0.21", "numpy>=1.24", "Pillow>=9"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.9"]
+
+[project.scripts]
+gplasc = "gplasc.__main__:main"
+
+[tool.setuptools.packages.find]
+include = ["gplasc*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+include = ["gplasc/**/*.py", "tests/**/*.py", "pyproject.toml"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

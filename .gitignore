@@ -1,6 +1,12 @@
 __pycache__/
 *.py[cod]
 .venv*/
+.pytest_cache/
+.ruff_cache/
+.idea/
+*.egg-info/
+build/
+dist/
 data/
 runs/
 logs/
