@@ -15,7 +15,7 @@ import math
 import random
 import numpy as np
 
-import tensorboard_logger as tb_logger
+from torch.utils.tensorboard import SummaryWriter
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -536,7 +536,7 @@ def train(train_loader, model, model2, criterion, optimizer, epoch, opt,t=None):
                     features2_sim[logits_mask.bool()].view(row_size, -1)).sum(dim=1, keepdim=True)
 
             x = (F.normalize(encode2_prev_task, dim=1) - F.normalize(encoded, dim=1))[labels.repeat(2) < opt.target_task*opt.cls_per_task]
-            drift_loss = (torch.norm(x, dim=1,p=2)**2).mean()
+            drift_loss = x.square().sum(dim=1).mean() if x.shape[0] else encoded.sum() * 0.0
             # torch.cosine_similarity(encoded.cpu().unsqueeze(0), w.unsqueeze(1), dim=-1, eps=1e-08)
             loss += opt.drift_lamda * drift_loss
 
@@ -544,6 +544,9 @@ def train(train_loader, model, model2, criterion, optimizer, epoch, opt,t=None):
             loss += opt.distill_power * loss_distill
             distill.update(loss_distill.item(), bsz)
 
+
+        if not torch.isfinite(loss):
+            raise FloatingPointError(f"Non-finite loss at task={opt.target_task}, epoch={epoch}, batch={idx}")
 
         # update metric
         losses.update(loss.item(), bsz)
@@ -615,7 +618,7 @@ def main():
         print(len(replay_indices))
 
     # tensorboard
-    logger = tb_logger.Logger(logdir=opt.tb_folder, flush_secs=2)
+    logger = SummaryWriter(log_dir=opt.tb_folder, flush_secs=2)
 
     original_epochs = copy.deepcopy(opt.epochs)
 
@@ -653,7 +656,8 @@ def main():
     for target_task in range(0 if opt.resume_target_task is None else opt.resume_target_task+1, opt.end_task):
 
         opt.target_task = target_task
-        model2 = copy.deepcopy(model)
+        model2 = copy.deepcopy(model).eval()
+        model2.requires_grad_(False)
 
         print('Start Training current task {}'.format(opt.target_task))
 
@@ -690,13 +694,15 @@ def main():
             time2 = time.time()
             print('epoch {}, total time {:.2f}'.format(epoch, time2 - time1))
 
-            logger.log_value('loss_{target_task}'.format(target_task=target_task), loss, epoch)
-            logger.log_value('learning_rate_{target_task}'.format(target_task=target_task), optimizer.param_groups[0]['lr'], epoch)
+            logger.add_scalar('loss_{target_task}'.format(target_task=target_task), loss, epoch)
+            logger.add_scalar('learning_rate_{target_task}'.format(target_task=target_task), optimizer.param_groups[0]['lr'], epoch)
 
 
         save_file = os.path.join(
             opt.save_folder, 'last_{policy}_{target_task}.pth'.format(policy=opt.replay_policy ,target_task=target_task))
-        save_model(model, optimizer, opt, opt.epochs, save_file)
+        save_model(model, optimizer, opt, opt.epochs, save_file, etf_dict=etf_dict)
+
+    logger.close()
 
 if __name__ == '__main__':
     main()

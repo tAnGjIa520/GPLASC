@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+.venv*/
+data/
+runs/
+logs/
+save_*/
+*.pth
+*.pt
+events.out.tfevents.*

@@ -68,10 +68,11 @@ def parse_option():
     parser.add_argument('--logpt', type=str, default='',
                         help='path to pre-trained model')
 
+    parser.add_argument('--data_folder', type=str, default='~/data/')
     opt = parser.parse_args()
 
     # set the path according to the environment
-    opt.data_folder = '~/data/'
+    opt.data_folder = os.path.expanduser(opt.data_folder)
 
     opt.tb_folder = os.path.join(opt.ckpt, 'tensorboard', 'linear_eval')
 
@@ -127,7 +128,7 @@ def set_model(opt, cls_num_list):
     criterion = torch.nn.CrossEntropyLoss()
     classifier = LinearClassifier(name=opt.model, num_classes=opt.n_cls)
 
-    ckpt = torch.load(opt.ckpt, map_location='cpu')
+    ckpt = torch.load(opt.ckpt, map_location='cpu', weights_only=False)
     state_dict = ckpt['model']
 
     if torch.cuda.is_available():
@@ -331,6 +332,8 @@ def main():
         'optimizer': optimizer.state_dict(),
         "linear":classifier.state_dict()
     }, save_file)
+
+    writer.close()
 
 if __name__ == '__main__':
     main()
